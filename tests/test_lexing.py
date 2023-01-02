@@ -10,6 +10,10 @@ class TestLexing(unittest.TestCase):
         expected = None
         self.assertEqual(actual, expected)
 
+    def test_initLexerWithInvalidString_raisesSyntaxError(self):
+        with self.assertRaises(Lexer.SyntaxError):
+            Lexer("A")
+
 
 if __name__ == '__main__':
     unittest.main()
