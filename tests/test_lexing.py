@@ -4,8 +4,8 @@ from calculator.lexer import Lexer
 
 
 class TestLexing(unittest.TestCase):
-    def test_initLexer(self):
-        lexer = Lexer()
+    def test_initLexerWithEmptyString(self):
+        lexer = Lexer("")
 
 
 if __name__ == '__main__':
