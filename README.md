@@ -22,11 +22,11 @@ And outputs the calculated value of the term. The output is always an integer.
 
 ### Constants
 
-- [ ] "" -> Nothing
-- [ ] "0" -> ConstantToken(0)
-- [ ] "11" -> ConstantToken(11)
-- [ ] "1 1" -> ConstantToken(11)
-- [ ] "A" -> Syntax Error, unknown symbol
+- [x] "" -> Nothing
+- [x] "0" -> ConstantToken(0)
+- [x] "11" -> ConstantToken(11)
+- [x] "1 1" -> ConstantToken(11)
+- [x] "A" -> Syntax Error, unknown symbol
 
 ### Additions
 
