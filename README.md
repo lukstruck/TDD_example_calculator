@@ -22,11 +22,23 @@ And outputs the calculated value of the term. The output is always an integer.
 
 ### Constants
 
+- [ ] "" -> Nothing
+- [ ] "0" -> ConstantToken(0)
+- [ ] "11" -> ConstantToken(11)
+- [ ] "1 1" -> ConstantToken(11)
+- [ ] "A" -> Syntax Error, unknown symbol
+
 ### Additions
 
 ### Multiplications
 
-## Parse Terms
+## Parsing
+
+- [ ] "" -> 0
+- [ ] "0" -> 0
+- [ ] "1" -> 1
+- [ ] "1 1" -> 11
+- [ ] "A" -> Syntax Error, unknown symbol
 
 ### Constants
 
