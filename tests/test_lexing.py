@@ -1,5 +1,7 @@
 import unittest
 
+from parameterized import parameterized
+
 from calculator.lexer import Lexer
 
 
@@ -10,9 +12,14 @@ class TestLexing(unittest.TestCase):
         expected = None
         self.assertEqual(actual, expected)
 
-    def test_initLexerWithInvalidString_raisesSyntaxError(self):
+    @parameterized.expand([
+        ["a"],
+        ["A"],
+        ["."],
+    ])
+    def test_initLexerWithInvalidString_raisesSyntaxError(self, invalid_string):
         with self.assertRaises(Lexer.SyntaxError):
-            Lexer("A")
+            Lexer(invalid_string)
 
 
 if __name__ == '__main__':
