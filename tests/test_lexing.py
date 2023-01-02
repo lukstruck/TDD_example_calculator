@@ -21,6 +21,12 @@ class TestLexing(unittest.TestCase):
         with self.assertRaises(Lexer.SyntaxError):
             Lexer(invalid_string)
 
+    def test_initLexerWith0String_nextReturnsConstantToken(self):
+        lexer = Lexer("0")
+        actual = lexer.next_token()
+        expected = Lexer.ConstantToken(0)
+        self.assertEqual(actual, expected)
+
 
 if __name__ == '__main__':
     unittest.main()
