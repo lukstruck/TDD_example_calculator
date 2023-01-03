@@ -10,7 +10,7 @@ class TestLexing(unittest.TestCase):
         lexer = Lexer("")
         actual = lexer.next_token()
         expected = None
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
     @parameterized.expand([
         ["a"],
@@ -31,7 +31,7 @@ class TestLexing(unittest.TestCase):
     def test_initLexerWithValidConstantString_nextReturnsConstantToken(self, input_string, expected):
         lexer = Lexer(input_string)
         actual = lexer.next_token()
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
     @parameterized.expand([
         ["*", Lexer.OperatorToken(Lexer.OperatorToken.Multiply)],
@@ -40,7 +40,7 @@ class TestLexing(unittest.TestCase):
     def test_initLexerWithOperator_nextReturnsOperatorToken(self, input_string, expected):
         lexer = Lexer(input_string)
         actual = lexer.next_token()
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
 
     @parameterized.expand([
         ["(", Lexer.BracketToken(Lexer.BracketToken.Open)],
@@ -49,7 +49,29 @@ class TestLexing(unittest.TestCase):
     def test_initLexerWithBracket_nextReturnsBracketToken(self, input_string, expected):
         lexer = Lexer(input_string)
         actual = lexer.next_token()
-        self.assertEqual(actual, expected)
+        self.assertEqual(expected, actual)
+
+    def test_initLexerWithValidCombination_nextReturnsValidTokens(self):
+        input_string = "+*(1 23)5)))84+3"
+        expected_tokens = [
+            Lexer.OperatorToken(Lexer.OperatorToken.Add),
+            Lexer.OperatorToken(Lexer.OperatorToken.Multiply),
+            Lexer.BracketToken(Lexer.BracketToken.Open),
+            Lexer.ConstantToken(123),
+            Lexer.BracketToken(Lexer.BracketToken.Close),
+            Lexer.ConstantToken(5),
+            Lexer.BracketToken(Lexer.BracketToken.Close),
+            Lexer.BracketToken(Lexer.BracketToken.Close),
+            Lexer.BracketToken(Lexer.BracketToken.Close),
+            Lexer.ConstantToken(84),
+            Lexer.OperatorToken(Lexer.OperatorToken.Add),
+            Lexer.ConstantToken(3),
+            None
+        ]
+        lexer = Lexer(input_string)
+        for expected_token in expected_tokens:
+            actual = lexer.next_token()
+            self.assertEqual(expected_token, actual)
 
 
 if __name__ == '__main__':

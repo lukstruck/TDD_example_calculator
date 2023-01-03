@@ -30,14 +30,14 @@ And outputs the calculated value of the term. The output is always an integer.
 
 ### + * ( )
 
-- [ ] \+ -> OperatorToken(Add)
-- [ ] \* -> OperatorToken(Multiply)
-- [ ] ( -> BracketToken(Open)
-- [ ] ) -> BracketToken(Close)
+- [x] \+ -> OperatorToken(Add)
+- [x] \* -> OperatorToken(Multiply)
+- [x] ( -> BracketToken(Open)
+- [x] ) -> BracketToken(Close)
 
 ### Combinations
 
-- [ ] \+*(1 23)5)))84+3
+- [x] \+*(1 23)5)))84+3
 
 ## Parsing
 

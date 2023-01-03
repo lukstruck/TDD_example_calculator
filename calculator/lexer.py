@@ -21,13 +21,13 @@ class Lexer:
         current_token_str = ""
         current_token_type = self._get_token_type(self.input_string[0])
 
-        while self._input_string_not_empty() and self._token_type_still_same(current_token_type):
+        while self._input_string_not_empty() and self._token_type_still_same(current_token_type, current_token_str):
             current_token_str += self._pop_input_string()
 
         return current_token_type(current_token_str)
 
-    def _token_type_still_same(self, current_token_type):
-        return current_token_type.matches(self.input_string[0])
+    def _token_type_still_same(self, current_token_type, current_token_str):
+        return current_token_type.matches(current_token_str + self.input_string[0])
 
     def _input_string_not_empty(self):
         return self.input_string != ""
@@ -38,16 +38,11 @@ class Lexer:
         return head
 
     def _get_token_type(self, token_str):
-        current_token_type = None
         for token_type in self.token_types:
             if token_type.matches(token_str):
-                current_token_type = token_type
-                break
+                return token_type
 
-        if current_token_type is None:
-            raise Lexer.SyntaxError(f"Input string contains illegal characters: {self.input_string[0]}")
-
-        return current_token_type
+        raise Lexer.SyntaxError(f"Input string contains illegal characters: {self.input_string[0]}")
 
     @dataclass
     class ConstantToken:
@@ -57,8 +52,8 @@ class Lexer:
             self.value = int(token_string)
 
         @staticmethod
-        def matches(character: str):
-            return character in "0123456789"
+        def matches(token_string: str):
+            return token_string[-1] in "0123456789"
 
     @dataclass
     class OperatorToken:
@@ -72,8 +67,8 @@ class Lexer:
             self.value = Lexer.OperatorToken.Operator(token_string)
 
         @staticmethod
-        def matches(character: str):
-            return character in "+*"
+        def matches(token_string: str):
+            return len(token_string) == 1 and token_string in "+*"
 
         Multiply = Operator.Multiply
         Add = Operator.Add
@@ -90,8 +85,8 @@ class Lexer:
             self.value = Lexer.BracketToken.Bracket(token_string)
 
         @staticmethod
-        def matches(character: str):
-            return character in "()"
+        def matches(token_string: str):
+            return len(token_string) == 1 and token_string in "()"
 
         Open = Bracket.Open
         Close = Bracket.Close
