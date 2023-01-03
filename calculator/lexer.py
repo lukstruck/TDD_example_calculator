@@ -9,7 +9,7 @@ class Lexer:
     def __init__(self, input_string: str):
         cleaned_string = input_string.replace(" ", "")
         self.input_string = cleaned_string
-        self.token_types = [Lexer.ConstantToken, Lexer.OperatorToken]
+        self.token_types = [Lexer.ConstantToken, Lexer.OperatorToken, Lexer.BracketToken]
 
     def next_token(self):
         if self.input_string == "":
@@ -57,3 +57,21 @@ class Lexer:
 
         Multiply = Operator.Multiply
         Add = Operator.Add
+
+    @dataclass
+    class BracketToken:
+        class Bracket(Enum):
+            Open = "("
+            Close = ")"
+
+        value: Bracket
+
+        def __init__(self, token_string):
+            self.value = Lexer.BracketToken.Bracket(token_string)
+
+        @staticmethod
+        def matches(character: str):
+            return character in "()"
+
+        Open = Bracket.Open
+        Close = Bracket.Close

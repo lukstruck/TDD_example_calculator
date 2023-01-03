@@ -42,6 +42,15 @@ class TestLexing(unittest.TestCase):
         actual = lexer.next_token()
         self.assertEqual(actual, expected)
 
+    @parameterized.expand([
+        ["(", Lexer.BracketToken(Lexer.BracketToken.Open)],
+        [")", Lexer.BracketToken(Lexer.BracketToken.Close)],
+    ])
+    def test_initLexerWithBracket_nextReturnsBracketToken(self, input_string, expected):
+        lexer = Lexer(input_string)
+        actual = lexer.next_token()
+        self.assertEqual(actual, expected)
+
 
 if __name__ == '__main__':
     unittest.main()
