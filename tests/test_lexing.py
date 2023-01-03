@@ -19,7 +19,7 @@ class TestLexing(unittest.TestCase):
     ])
     def test_initLexerWithInvalidString_raisesSyntaxError(self, invalid_string):
         with self.assertRaises(Lexer.SyntaxError):
-            Lexer(invalid_string)
+            Lexer(invalid_string).next_token()
 
     @parameterized.expand([
         ["0", Lexer.ConstantToken(0)],
@@ -29,6 +29,15 @@ class TestLexing(unittest.TestCase):
         ["01", Lexer.ConstantToken(1)],
     ])
     def test_initLexerWithValidConstantString_nextReturnsConstantToken(self, input_string, expected):
+        lexer = Lexer(input_string)
+        actual = lexer.next_token()
+        self.assertEqual(actual, expected)
+
+    @parameterized.expand([
+        ["*", Lexer.OperatorToken(Lexer.OperatorToken.Multiply)],
+        # ["1", Lexer.ConstantToken(1)],
+    ])
+    def test_initLexerWithOperator_nextReturnsOperatorToken(self, input_string, expected):
         lexer = Lexer(input_string)
         actual = lexer.next_token()
         self.assertEqual(actual, expected)

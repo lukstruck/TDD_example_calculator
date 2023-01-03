@@ -28,9 +28,16 @@ And outputs the calculated value of the term. The output is always an integer.
 - [x] "1 1" -> ConstantToken(11)
 - [x] "A" -> Syntax Error, unknown symbol
 
-### Additions
+### + * ( )
 
-### Multiplications
+- [ ] \+ -> OperatorToken(Add)
+- [ ] \* -> OperatorToken(Multiply)
+- [ ] ( -> BracketToken(Open)
+- [ ] ) -> BracketToken(Close)
+
+### Combinations
+
+- [ ] \+*(1 23)5)))84+3
 
 ## Parsing
 
@@ -39,6 +46,10 @@ And outputs the calculated value of the term. The output is always an integer.
 - [ ] "1" -> 1
 - [ ] "1 1" -> 11
 - [ ] "A" -> Syntax Error, unknown symbol
+- [ ] "(", ")" -> Semantics Error, unclosed bracket
+- [ ] "()" -> Semantics Error, missing operator
+- [ ] "(4)" -> Semantics Error, unknown operator
+- [ ] "4 +" -> Semantics Error, operator not first instruction in brackets
 
 ### Constants
 
