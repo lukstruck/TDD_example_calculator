@@ -14,20 +14,35 @@ class Lexer:
     def next_token(self):
         if self.input_string == "":
             return None
-        current_token = ""
-        last_token_type = None
+
+        current_token_str = self.input_string[0]
+        current_token_type = self._get_token_type(current_token_str)
+
+        while self._input_string_not_empty() and self._token_type_still_same(current_token_type):
+            current_token_str += self._pop_input_string()
+
+        return current_token_type(current_token_str)
+
+    def _token_type_still_same(self, current_token_type):
+        return current_token_type.matches(self.input_string[0])
+
+    def _input_string_not_empty(self):
+        return self.input_string != ""
+
+    def _pop_input_string(self):
+        head = self.input_string[0]
+        self.input_string = self.input_string[1:]
+        return head
+
+    def _get_token_type(self, token_str):
+        current_token_type = None
         for token_type in self.token_types:
-            if token_type.matches(self.input_string[0]):
-                last_token_type = token_type
+            if token_type.matches(token_str):
+                current_token_type = token_type
                 break
-        if last_token_type is None:
+        if current_token_type is None:
             raise Lexer.SyntaxError(f"Input string contains illegal characters: {self.input_string[0]}")
-
-        while self.input_string != "" and last_token_type.matches(self.input_string[0]):
-            current_token += self.input_string[0]
-            self.input_string = self.input_string[1:]
-
-        return last_token_type(current_token)
+        return current_token_type
 
     @dataclass
     class ConstantToken:
