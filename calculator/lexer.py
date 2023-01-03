@@ -18,8 +18,8 @@ class Lexer:
         return self._get_next_token()
 
     def _get_next_token(self):
-        current_token_str = self.input_string[0]
-        current_token_type = self._get_token_type(current_token_str)
+        current_token_str = ""
+        current_token_type = self._get_token_type(self.input_string[0])
 
         while self._input_string_not_empty() and self._token_type_still_same(current_token_type):
             current_token_str += self._pop_input_string()
@@ -43,8 +43,10 @@ class Lexer:
             if token_type.matches(token_str):
                 current_token_type = token_type
                 break
+
         if current_token_type is None:
             raise Lexer.SyntaxError(f"Input string contains illegal characters: {self.input_string[0]}")
+
         return current_token_type
 
     @dataclass
