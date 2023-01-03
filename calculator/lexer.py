@@ -15,6 +15,9 @@ class Lexer:
         if self.input_string == "":
             return None
 
+        return self._get_next_token()
+
+    def _get_next_token(self):
         current_token_str = self.input_string[0]
         current_token_type = self._get_token_type(current_token_str)
 
