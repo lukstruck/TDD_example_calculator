@@ -35,7 +35,7 @@ class TestLexing(unittest.TestCase):
 
     @parameterized.expand([
         ["*", Lexer.OperatorToken(Lexer.OperatorToken.Multiply)],
-        # ["1", Lexer.ConstantToken(1)],
+        ["+", Lexer.OperatorToken(Lexer.OperatorToken.Add)],
     ])
     def test_initLexerWithOperator_nextReturnsOperatorToken(self, input_string, expected):
         lexer = Lexer(input_string)
