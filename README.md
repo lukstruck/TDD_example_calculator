@@ -41,15 +41,16 @@ And outputs the calculated value of the term. The output is always an integer.
 
 ## Parsing
 
-- [ ] "" -> 0
-- [ ] "0" -> 0
-- [ ] "1" -> 1
-- [ ] "1 1" -> 11
-- [ ] "A" -> Syntax Error, unknown symbol
+- [ ] "0" -> Constant(0)
+- [ ] "1+1" -> Addition(Constant(1), Constant(1))
+- [ ] "1*1" -> Multiplication(Constant(1), Constant(1))
+- [ ] "(1+1)*1" -> Multiplication(Addition(Constant(1), Constant(1)), Constant(1))
+
 - [ ] "(", ")" -> Semantics Error, unclosed bracket
 - [ ] "()" -> Semantics Error, missing operator
 - [ ] "(4)" -> Semantics Error, unknown operator
-- [ ] "4 +" -> Semantics Error, operator not first instruction in brackets
+- [ ] "+ 4" -> Semantics Error, missing brackets
+- [ ] "(+ 4)" -> Semantics Error, missing operand
 
 ### Constants
 

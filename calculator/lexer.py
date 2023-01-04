@@ -1,15 +1,34 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import TypeVar, Generic
+
+T = TypeVar("T")
+
+
+class Operator(Enum):
+    Multiply = "*"
+    Add = "+"
+
+
+class Bracket(Enum):
+    Open = "("
+    Close = ")"
 
 
 class Lexer:
     class SyntaxError(Exception):
         pass
 
+    class Token(Generic[T]):
+        value: T
+
+        @staticmethod
+        def matches(token_string: str):
+            raise NotImplementedError()
+
     def __init__(self, input_string: str):
         cleaned_string = input_string.replace(" ", "")
         self.input_string = cleaned_string
-        self.token_types = [Lexer.ConstantToken, Lexer.OperatorToken, Lexer.BracketToken]
 
     def next_token(self):
         if self.input_string == "":
@@ -45,9 +64,7 @@ class Lexer:
         raise Lexer.SyntaxError(f"Input string contains illegal characters: {self.input_string[0]}")
 
     @dataclass
-    class ConstantToken:
-        value: int
-
+    class ConstantToken(Token[int]):
         def __init__(self, token_string):
             self.value = int(token_string)
 
@@ -56,15 +73,9 @@ class Lexer:
             return token_string[-1] in "0123456789"
 
     @dataclass
-    class OperatorToken:
-        class Operator(Enum):
-            Multiply = "*"
-            Add = "+"
-
-        value: Operator
-
+    class OperatorToken(Token[Operator]):
         def __init__(self, token_string):
-            self.value = Lexer.OperatorToken.Operator(token_string)
+            self.value = Operator(token_string)
 
         @staticmethod
         def matches(token_string: str):
@@ -74,15 +85,9 @@ class Lexer:
         Add = Operator.Add
 
     @dataclass
-    class BracketToken:
-        class Bracket(Enum):
-            Open = "("
-            Close = ")"
-
-        value: Bracket
-
+    class BracketToken(Token[Bracket]):
         def __init__(self, token_string):
-            self.value = Lexer.BracketToken.Bracket(token_string)
+            self.value = Bracket(token_string)
 
         @staticmethod
         def matches(token_string: str):
@@ -90,3 +95,5 @@ class Lexer:
 
         Open = Bracket.Open
         Close = Bracket.Close
+
+    token_types = [ConstantToken, OperatorToken, BracketToken]
