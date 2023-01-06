@@ -20,9 +20,13 @@ class TestParsing(unittest.TestCase):
         [[Lexer.BracketToken(Lexer.BracketToken.Open)]],
         [[Lexer.BracketToken(Lexer.BracketToken.Close)]],
     ])
-    def test_invalidList_raisesError(self, token_list):
+    def test_invalidBrackets_raisesError(self, token_list):
         with self.assertRaises(Parser.SemanticsError):
             Parser.parse(token_list)
+
+    def test_emptyBrackets_raisesError(self):
+        with self.assertRaises(Parser.SemanticsError):
+            Parser.parse([Lexer.BracketToken(Lexer.BracketToken.Open), Lexer.BracketToken(Lexer.BracketToken.Close)])
 
 
 if __name__ == '__main__':

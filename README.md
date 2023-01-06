@@ -41,12 +41,12 @@ And outputs the calculated value of the term. The output is always an integer.
 
 ## Parsing
 
-- [ ] "0" -> Constant(0)
+- [x] "0" -> Constant(0)
 - [ ] "1+1" -> Addition(Constant(1), Constant(1))
 - [ ] "1*1" -> Multiplication(Constant(1), Constant(1))
 - [ ] "(1+1)*1" -> Multiplication(Addition(Constant(1), Constant(1)), Constant(1))
 
-- [ ] "(", ")" -> Semantics Error, unclosed bracket
+- [x] "(", ")" -> Semantics Error, unclosed bracket
 - [ ] "()" -> Semantics Error, missing operator
 - [ ] "(4)" -> Semantics Error, unknown operator
 - [ ] "+ 4" -> Semantics Error, missing brackets
